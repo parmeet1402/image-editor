@@ -1,33 +1,68 @@
-.App {
-  text-align: center;
+/* @import ~antd/dist/antd.css";
+ */
+/* :root {
+  --contrast: 100;
+  --hue: 0;
+  --brightness: "100";
+  --saturation: "100";
+  --sepia: "0";
+}
+#heroImage {
+  filter: contrast(var(--contrast) %) hue(var(--hue) deg);
+}
+ */
+
+button {
+  z-index: 100;
+}
+#panel {
+  animation: enter-animation 0.5s;
+  bottom: 0%;
+  width: 100%;
+  background-color: white;
+  position: absolute;
+  z-index: 99;
+  transition: all 0.5s;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+@keyframes enter-animation {
+  0% {
+    bottom: -20%;
+  }
+  100% {
+    bottom: 0%;
+  }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* ============================= */
+/*          FILTER ITEM          */
+/* ============================= */
+.filter-row {
   display: flex;
+  justify-content: space-around;
+  margin-top: 8px;
+}
+.filter-item {
+  display: inline-flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+.filter-item img {
+  height: 68px;
+  width: 68px;
+}
+.filter-item span {
+  text-transform: capitalize;
+  text-align: center;
+  font-weight: 500;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.active--text {
+  color: rgb(156, 156, 49);
+}
+
+.active--image {
+  /* border: 2px solid rgb(156, 156, 49); */
+  box-shadow: 0 0 2px 2px rgb(156, 156, 49);
 }
