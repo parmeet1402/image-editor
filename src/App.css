@@ -11,27 +11,26 @@
   filter: contrast(var(--contrast) %) hue(var(--hue) deg);
 }
  */
-
+.App {
+  position: relative;
+}
 button {
   z-index: 100;
 }
 #panel {
-  animation: enter-animation 0.5s;
-  bottom: 0%;
+  /* animation: enter-animation 0.5s; */
+  bottom: 30px;
   width: 100%;
+  height: 0;
   background-color: white;
   position: absolute;
   z-index: 99;
-  transition: all 0.5s;
+  transition: all 0.8s;
 }
 
-@keyframes enter-animation {
-  0% {
-    bottom: -20%;
-  }
-  100% {
-    bottom: 0%;
-  }
+.sliders {
+  width: 90%;
+  margin: 0 auto;
 }
 
 /* ============================= */
@@ -65,4 +64,13 @@ button {
 .active--image {
   /* border: 2px solid rgb(156, 156, 49); */
   box-shadow: 0 0 2px 2px rgb(156, 156, 49);
+}
+
+/* OVERRIDE */
+..MuiBottomNavigation-root {
+  position: absolute;
+}
+
+.MuiBottomNavigationAction-root {
+  color: rgba(0, 0, 0, 0.7) !important;
 }

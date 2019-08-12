@@ -71,7 +71,9 @@ class App extends Component {
     this.setState({
       showPanel:
         this.state.panelContentType === panelContentType ||
-        this.state.panelContentType === ""
+        this.state.panelContentType === "" ||
+        (this.state.panelContentType !== panelContentType &&
+          !this.state.showPanel)
           ? !this.state.showPanel
           : this.state.showPanel,
       panelContentType
@@ -95,119 +97,119 @@ class App extends Component {
                 this.state.settings.saturation
               }%) sepia(${this.state.settings.sepia}%)`
             }}
-            src="https://unsplash.it/600/800"
+            src={`https://unsplash.it/${window.screen.width}/${window.screen
+              .height - 56}`}
             alt="Hero Background"
             id="heroImage"
           />
         </div>
 
-        <BottomNavigation>
-          {this.state.showPanel && (
-            <div
-              id="panel"
-              style={{
-                height:
-                  this.state.panelContentType === "styles" ? "150px" : "500px"
-              }}
-            >
-              {this.state.panelContentType === "styles" ? (
-                <div className="filter-row">
-                  {Object.keys(this.state.filters).map(key => (
-                    <div
-                      key={key}
-                      className="filter-item"
-                      onClick={() => this.changeFilter(key)}
+        {this.state.showPanel && (
+          <div
+            id="panel"
+            style={{
+              height:
+                this.state.panelContentType === "styles" ? "150px" : "500px"
+            }}
+          >
+            {this.state.panelContentType === "styles" ? (
+              <div className="filter-row">
+                {Object.keys(this.state.filters).map(key => (
+                  <div
+                    key={key}
+                    className="filter-item"
+                    onClick={() => this.changeFilter(key)}
+                  >
+                    <img
+                      src={`https://unsplash.it/${window.screen.width}/${window
+                        .screen.height - 56}`}
+                      alt={key}
+                      style={{
+                        filter: `contrast(${
+                          this.state.filters[key]["contrast"]
+                        }%) hue-rotate(${
+                          this.state.filters[key]["hue"]
+                        }deg) brightness(${
+                          this.state.filters[key]["brightness"]
+                        }%) saturate(${
+                          this.state.filters[key]["saturation"]
+                        }%) sepia(${this.state.filters[key]["sepia"]}%)`
+                      }}
+                      className={
+                        this.state.activeFilter === key ? "active--image" : ""
+                      }
+                    />
+                    <span
+                      className={
+                        this.state.activeFilter === key ? "active--text" : ""
+                      }
                     >
-                      <img
-                        src="https://unsplash.it/600/800"
-                        alt={key}
-                        style={{
-                          filter: `contrast(${
-                            this.state.filters[key]["contrast"]
-                          }%) hue-rotate(${
-                            this.state.filters[key]["hue"]
-                          }deg) brightness(${
-                            this.state.filters[key]["brightness"]
-                          }%) saturate(${
-                            this.state.filters[key]["saturation"]
-                          }%) sepia(${this.state.filters[key]["sepia"]}%)`
-                        }}
-                        className={
-                          this.state.activeFilter === key ? "active--image" : ""
-                        }
-                      />
-                      <span
-                        className={
-                          this.state.activeFilter === key ? "active--text" : ""
-                        }
-                      >
-                        {key}
-                      </span>
-                    </div>
-                  ))}
+                      {key}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="sliders">
+                <div className="slider-group">
+                  <h3>Contrast</h3>
+                  <Slider
+                    value={parseInt(this.state.settings.contrast)}
+                    onChange={(e, value) =>
+                      this.handleChange("contrast", e, value)
+                    }
+                    aria-labelledby="continuous-slider"
+                    min={50}
+                    max={150}
+                  />
                 </div>
-              ) : (
-                <div className="sliders">
-                  <div className="slider-group">
-                    <h3>Contrast</h3>
-                    <Slider
-                      value={parseInt(this.state.settings.contrast)}
-                      onChange={(e, value) =>
-                        this.handleChange("contrast", e, value)
-                      }
-                      aria-labelledby="continuous-slider"
-                      min={50}
-                      max={150}
-                    />
-                  </div>
-                  <div className="slider-group">
-                    <h3>Hue</h3>
-                    <Slider
-                      value={parseInt(this.state.settings["hue"])}
-                      onChange={(e, value) =>
-                        this.handleChange("hue", e, value)
-                      }
-                      min={-50}
-                      max={50}
-                    />
-                  </div>
-                  <div className="slider-group">
-                    <h3>Brightness</h3>
-                    <Slider
-                      value={parseInt(this.state.settings.brightness)}
-                      onChange={(e, value) =>
-                        this.handleChange("brightness", e, value)
-                      }
-                      min={50}
-                      max={150}
-                    />
-                  </div>
-                  <div className="slider-group">
-                    <h3>Saturation</h3>
-                    <Slider
-                      value={parseInt(this.state.settings.saturation)}
-                      onChange={(e, value) =>
-                        this.handleChange("saturation", e, value)
-                      }
-                      min={0}
-                      max={100}
-                    />
-                  </div>
-                  <div className="slider-group">
-                    <h3>Sepia</h3>
-                    <Slider
-                      value={parseInt(this.state.settings.sepia)}
-                      onChange={(e, value) =>
-                        this.handleChange("sepia", e, value)
-                      }
-                      min={0}
-                      max={150}
-                    />
-                  </div>
+                <div className="slider-group">
+                  <h3>Hue</h3>
+                  <Slider
+                    value={parseInt(this.state.settings["hue"])}
+                    onChange={(e, value) => this.handleChange("hue", e, value)}
+                    min={-50}
+                    max={50}
+                  />
                 </div>
-              )}
-            </div>
-          )}
+                <div className="slider-group">
+                  <h3>Brightness</h3>
+                  <Slider
+                    value={parseInt(this.state.settings.brightness)}
+                    onChange={(e, value) =>
+                      this.handleChange("brightness", e, value)
+                    }
+                    min={50}
+                    max={150}
+                  />
+                </div>
+                <div className="slider-group">
+                  <h3>Saturation</h3>
+                  <Slider
+                    value={parseInt(this.state.settings.saturation)}
+                    onChange={(e, value) =>
+                      this.handleChange("saturation", e, value)
+                    }
+                    min={0}
+                    max={100}
+                  />
+                </div>
+                <div className="slider-group">
+                  <h3>Sepia</h3>
+                  <Slider
+                    value={parseInt(this.state.settings.sepia)}
+                    onChange={(e, value) =>
+                      this.handleChange("sepia", e, value)
+                    }
+                    min={0}
+                    max={150}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+        <BottomNavigation>
           <BottomNavigationAction
             label="Styles"
             value="styles"
